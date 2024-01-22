@@ -45,4 +45,7 @@ public:
 		bool Random = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrolling")
 		bool Still = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int LaughPoints = 0;
 };
