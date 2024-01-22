@@ -39,4 +39,10 @@ public:
 
 	APatrolPath* GetPatrolPath() const;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrolling")
+		bool Path = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrolling")
+		bool Random = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrolling")
+		bool Still = false;
 };

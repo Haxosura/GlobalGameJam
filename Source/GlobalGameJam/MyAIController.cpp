@@ -25,6 +25,13 @@ void AMyAIController::OnPossess(APawn* InPawn)
 			UseBlackboard(tree->BlackboardAsset, b);
 			Blackboard = b;
 			RunBehaviorTree(tree);
+
+			if (npc->Path == true)
+				GetBlackboardComponent()->SetValueAsBool("PatrolPath", true);
+			if (npc->Random == true)
+				GetBlackboardComponent()->SetValueAsBool("RandomPatrol", true);
+			if (npc->Still== true)
+				GetBlackboardComponent()->SetValueAsBool("NoPatrol", true);
 		}
 	}
 }
