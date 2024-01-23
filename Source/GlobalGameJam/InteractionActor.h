@@ -1,9 +1,9 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "InteractionActor.generated.h"
 
 UCLASS()

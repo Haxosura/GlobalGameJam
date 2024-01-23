@@ -3,6 +3,7 @@
 
 #include "InteractionActor.h"
 #include "GlobalGameJamCharacter.h"
+#include "UObject/ConstructorHelpers.h"
 
 // Sets default values
 AInteractionActor::AInteractionActor()
@@ -19,7 +20,6 @@ AInteractionActor::AInteractionActor()
 	RootComponent = InteractionSphere;
 
 	InteractionSphere->OnComponentBeginOverlap.AddDynamic(this, &AInteractionActor::OnBeginOverlap);
-
 }
 
 void AInteractionActor::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
