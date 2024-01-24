@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "InteractionActor.h"
 #include "GlobalGameJamCharacter.generated.h"
-
 
 UCLASS(config=Game)
 class AGlobalGameJamCharacter : public ACharacter
@@ -37,10 +37,18 @@ class AGlobalGameJamCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InteractAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UUserWidget> InteractWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* InteractWidget;
+
 public:
 	AGlobalGameJamCharacter();
 	
-
 protected:
 
 	/** Called for movement input */
@@ -48,7 +56,14 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+	/** Called for Interact input */
+	void Interact();			
+	void InteractCheck();
+
+	FHitResult InteractHitResualt;
+	FVector ViewVector;
+	FRotator ViewRotation;
 
 protected:
 	// APawn interface
@@ -57,10 +72,13 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
+	virtual void Tick(float DeltaTime) override;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
 };
 
