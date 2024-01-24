@@ -9,7 +9,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
+#include "InteractionActor.h"
+#include "Blueprint/UserWidget.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AGlobalGameJamCharacter
@@ -64,6 +65,16 @@ void AGlobalGameJamCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	InteractWidget = CreateWidget(Cast<APlayerController>(GetController()), InteractWidgetClass);
+	InteractWidget->AddToViewport(0);
+	InteractWidget->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void AGlobalGameJamCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	InteractCheck();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -83,6 +94,9 @@ void AGlobalGameJamCharacter::SetupPlayerInputComponent(class UInputComponent* P
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGlobalGameJamCharacter::Look);
+
+		//Interacting
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AGlobalGameJamCharacter::Interact);
 
 	}
 
@@ -124,6 +138,30 @@ void AGlobalGameJamCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void AGlobalGameJamCharacter::Interact()
+{
+	if (Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Actor Hit"));
+		UE_LOG(LogTemp, Warning, TEXT("123"));
+	}
+}
+
+void AGlobalGameJamCharacter::InteractCheck()
+{
+	Cast<APlayerController>(GetController())->GetPlayerViewPoint(ViewVector, ViewRotation);
+	FVector VecDirection = ViewRotation.Vector() * 1000.f;
+	FVector InteractEnd = ViewVector + VecDirection;
+	FCollisionQueryParams QueryParams;
+	GetWorld()->LineTraceSingleByChannel(InteractHitResualt, ViewVector, InteractEnd, ECollisionChannel::ECC_GameTraceChannel1, QueryParams);
 
 
-
+	if (Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+	{
+		InteractWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		InteractWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
