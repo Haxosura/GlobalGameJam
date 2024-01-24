@@ -26,10 +26,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class USphereComponent* InteractionSphere;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 	float SphereRaduis = 200.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 	bool CanBeUsed = false;
 
 	UFUNCTION()

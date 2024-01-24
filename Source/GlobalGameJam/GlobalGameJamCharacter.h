@@ -43,6 +43,10 @@ class AGlobalGameJamCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> InteractWidgetClass;
 
+	UPROPERTY(EditAnywhere)
+	TArray<AInteractionActor*> InventoryArray;
+		
+
 	UPROPERTY()
 	UUserWidget* InteractWidget;
 
@@ -78,6 +82,7 @@ protected:
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };

@@ -145,8 +145,9 @@ void AGlobalGameJamCharacter::Interact()
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Actor Hit"));
 
 		Actor->CanBeUsed = true;
+		InventoryArray.Add(Actor);
 		Actor->Destroy();
-
+	
 	}
 }
 
