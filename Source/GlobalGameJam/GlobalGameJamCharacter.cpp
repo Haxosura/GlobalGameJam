@@ -98,6 +98,8 @@ void AGlobalGameJamCharacter::SetupPlayerInputComponent(class UInputComponent* P
 		//Interacting
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AGlobalGameJamCharacter::Interact);
 
+		//Interacting
+		EnhancedInputComponent->BindAction(UseItemAction, ETriggerEvent::Started, this, &AGlobalGameJamCharacter::UseItem);
 	}
 
 }
@@ -177,5 +179,29 @@ void AGlobalGameJamCharacter::InteractCheck()
 	else
 	{
 		InteractWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void AGlobalGameJamCharacter::UseItem()
+{
+	if (const auto Item = SelectedItem.GetDefaultObject())
+	{
+		if (Item->Useable == true)
+		{
+			ItemInInventroy = false;
+			SelectedItem = nullptr;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Used Item"));
+		}
+		if (Item->Placeable == true)
+		{
+			ItemInInventroy = false;
+			SelectedItem = nullptr;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Place Item"));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Item Fail"));
+		}
+
 	}
 }

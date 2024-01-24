@@ -32,6 +32,12 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool CanBeUsed = false;
 
+	UPROPERTY(EditAnywhere)
+	bool Placeable = false;
+
+	UPROPERTY(EditAnywhere)
+	bool Useable = false;
+
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
