@@ -77,7 +77,6 @@ void AGlobalGameJamCharacter::Tick(float DeltaTime)
 	InteractCheck();
 }
 
-//////////////////////////////////////////////////////////////////////////
 // Input
 
 void AGlobalGameJamCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
