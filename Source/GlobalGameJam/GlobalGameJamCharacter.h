@@ -44,8 +44,10 @@ class AGlobalGameJamCharacter : public ACharacter
 	TSubclassOf<UUserWidget> InteractWidgetClass;
 
 	UPROPERTY(EditAnywhere)
-	TArray<AInteractionActor*> InventoryArray;
-		
+	TSubclassOf<AActor> SelectedItem;
+
+	UPROPERTY(EditAnywhere)
+	bool ItemInInventroy = false;
 
 	UPROPERTY()
 	UUserWidget* InteractWidget;

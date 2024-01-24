@@ -140,16 +140,26 @@ void AGlobalGameJamCharacter::Look(const FInputActionValue& Value)
 
 void AGlobalGameJamCharacter::Interact()
 {
-	if (const auto Actor = Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+	if (ItemInInventroy == false)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Actor Hit"));
+		if (const auto Actor = Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+		{
+			
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Item Pickup"));
 
-		Actor->CanBeUsed = true;
-		InventoryArray.Add(Actor);
-		Actor->Destroy();
-	
+			ItemInInventroy = true;
+			SelectedItem = Actor->GetClass();
+			Actor->CanBeUsed = true;
+			Actor->Destroy();
+			
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Cant Pickup"));
 	}
 }
+
 
 void AGlobalGameJamCharacter::InteractCheck()
 {
