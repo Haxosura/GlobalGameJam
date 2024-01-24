@@ -40,8 +40,17 @@ class AGlobalGameJamCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InteractAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* UseItemAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Widget, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<UUserWidget> InteractWidgetClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AInteractionActor> SelectedItem;
+
+	UPROPERTY(EditAnywhere)
+	bool ItemInInventroy = false;
 
 	UPROPERTY()
 	UUserWidget* InteractWidget;
@@ -49,7 +58,6 @@ class AGlobalGameJamCharacter : public ACharacter
 public:
 	AGlobalGameJamCharacter();
 	
-
 protected:
 
 	/** Called for movement input */
@@ -61,6 +69,8 @@ protected:
 	/** Called for Interact input */
 	void Interact();
 	void InteractCheck();
+
+	void UseItem();
 
 	FHitResult InteractHitResualt;
 	FVector ViewVector;
@@ -78,6 +88,7 @@ protected:
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };

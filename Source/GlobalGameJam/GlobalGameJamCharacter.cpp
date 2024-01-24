@@ -98,6 +98,8 @@ void AGlobalGameJamCharacter::SetupPlayerInputComponent(class UInputComponent* P
 		//Interacting
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AGlobalGameJamCharacter::Interact);
 
+		//Interacting
+		EnhancedInputComponent->BindAction(UseItemAction, ETriggerEvent::Started, this, &AGlobalGameJamCharacter::UseItem);
 	}
 
 }
@@ -140,12 +142,26 @@ void AGlobalGameJamCharacter::Look(const FInputActionValue& Value)
 
 void AGlobalGameJamCharacter::Interact()
 {
-	if (Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+	if (ItemInInventroy == false)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Actor Hit"));
-		UE_LOG(LogTemp, Warning, TEXT("123"));
+		if (const auto Actor = Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+		{
+			
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Item Pickup"));
+
+			ItemInInventroy = true;
+			SelectedItem = Actor->GetClass();
+			Actor->CanBeUsed = true;
+			Actor->Destroy();
+			
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Cant Pickup"));
 	}
 }
+
 
 void AGlobalGameJamCharacter::InteractCheck()
 {
@@ -163,5 +179,29 @@ void AGlobalGameJamCharacter::InteractCheck()
 	else
 	{
 		InteractWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void AGlobalGameJamCharacter::UseItem()
+{
+	if (const auto Item = SelectedItem.GetDefaultObject())
+	{
+		if (Item->Useable == true)
+		{
+			ItemInInventroy = false;
+			SelectedItem = nullptr;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Used Item"));
+		}
+		if (Item->Placeable == true)
+		{
+			ItemInInventroy = false;
+			SelectedItem = nullptr;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Place Item"));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Item Fail"));
+		}
+
 	}
 }

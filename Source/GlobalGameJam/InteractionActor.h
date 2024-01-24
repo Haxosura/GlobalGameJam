@@ -26,7 +26,17 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class USphereComponent* InteractionSphere;
 
+	UPROPERTY(EditAnywhere)
 	float SphereRaduis = 200.f;
+
+	UPROPERTY(EditAnywhere)
+	bool CanBeUsed = false;
+
+	UPROPERTY(EditAnywhere)
+	bool Placeable = false;
+
+	UPROPERTY(EditAnywhere)
+	bool Useable = false;
 
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
