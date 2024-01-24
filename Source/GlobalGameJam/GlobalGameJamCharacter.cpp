@@ -140,10 +140,13 @@ void AGlobalGameJamCharacter::Look(const FInputActionValue& Value)
 
 void AGlobalGameJamCharacter::Interact()
 {
-	if (Cast<AInteractionActor>(InteractHitResualt.GetActor()))
+	if (const auto Actor = Cast<AInteractionActor>(InteractHitResualt.GetActor()))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Blue, TEXT("Actor Hit"));
-		UE_LOG(LogTemp, Warning, TEXT("123"));
+
+		Actor->CanBeUsed = true;
+		Actor->Destroy();
+
 	}
 }
 

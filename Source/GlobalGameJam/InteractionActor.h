@@ -26,7 +26,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	class USphereComponent* InteractionSphere;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	float SphereRaduis = 200.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	bool CanBeUsed = false;
 
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
