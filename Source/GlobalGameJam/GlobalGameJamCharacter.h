@@ -50,10 +50,10 @@ class AGlobalGameJamCharacter : public ACharacter
 	TSubclassOf<UUserWidget> InteractWidgetClass;
 
 	/** Interact Actor Class */
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AInteractionActor> SelectedItem;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool ItemInInventroy = false;
 
 	UPROPERTY()
